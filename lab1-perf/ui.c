@@ -28,7 +28,8 @@ static char ui_get_choice()
 
 static void ui_line(char c, int n)
 {
-	while (n-- > 0) {
+	while (n-- > 0)
+	{
 		putchar(c);
 	}
 	putchar('\n');
@@ -38,8 +39,9 @@ static void ui_menu_options(const char *options[], int num_options)
 {
 	int i;
 
-	for (i=0; i<num_options; i++) {
-		printf("    %c) %s\n", 'a'+i, options[i]);
+	for (i = 0; i < num_options; i++)
+	{
+		printf("    %c) %s\n", 'a' + i, options[i]);
 	}
 }
 
@@ -49,6 +51,20 @@ static void ui_menu()
 		"Menu",
 		"Exit\n",
 		"Bubble sort best case",
+		"Bubble sort worst case",
+		"Bubble sort average case\n",
+		"Insertion sort best case",
+		"Insertion sort worst case",
+		"Insertion sort average case\n",
+		"Quick sort best case",
+		"Quick sort worst case",
+		"Quick sort average case\n",
+		"Linear sort best case",
+		"Linear sort worst case",
+		"Linear sort average case\n",
+		"Binary sort best case",
+		"Binary sort worst case",
+		"Binary sort average case\n",
 		// TODO: complete menu
 	};
 
@@ -64,32 +80,77 @@ void ui_run()
 {
 	bool running, show_menu;
 	result_t result[RESULT_ROWS];
-	
+
 	show_menu = true;
 	running = true;
-	while (running) {
-		if (show_menu) {
+	while (running)
+	{
+		if (show_menu)
+		{
 			show_menu = false;
 			ui_menu();
 		}
-		switch (ui_get_choice()) {
-			// House keeping
-			case 'a':
-				show_menu = true;
-				break;
-			case 'b':
-				running = false;
-				break;
-			// Bubble sort
-			case 'c':
-				benchmark(bubble_sort_t, best_t, result, RESULT_ROWS);
-				printf("todo> implemenet BE + present results in FE\n");
-				break;
-			// Invalid input
-			default:
-				show_menu = false;
-				ui_invalid_input();
-				break;
+		switch (ui_get_choice())
+		{
+		// House keeping
+		case 'a':
+			show_menu = true;
+			break;
+		case 'b':
+			running = false;
+			break;
+		// Bubble sort
+		case 'c':
+			benchmark(bubble_sort_t, best_t, result, RESULT_ROWS);
+			//printf("todo> implemenet BE + present results in FE\n");
+			break;
+		case 'd':
+			benchmark(bubble_sort_t, worst_t, result, RESULT_ROWS);
+			break;
+		case 'e':
+			benchmark(bubble_sort_t, average_t, result, RESULT_ROWS);
+			break;
+		case 'f':
+			benchmark(insertion_sort_t, best_t, result, RESULT_ROWS);
+			break;
+		case 'g':
+			benchmark(insertion_sort_t, worst_t, result, RESULT_ROWS);
+			break;
+		case 'h':
+			benchmark(insertion_sort_t, average_t, result, RESULT_ROWS);
+			break;
+		case 'i':
+			benchmark(quick_sort_t, best_t, result, RESULT_ROWS);
+			break;
+		case 'j':
+			benchmark(quick_sort_t, worst_t, result, RESULT_ROWS);
+			break;
+		case 'k':
+			benchmark(quick_sort_t, average_t, result, RESULT_ROWS);
+			break;
+		case 'l':
+			benchmark(linear_search_t, best_t, result, RESULT_ROWS);
+			break;
+		case 'm':
+			benchmark(linear_search_t, worst_t, result, RESULT_ROWS);
+			break;
+		case 'n':
+			benchmark(linear_search_t, average_t, result, RESULT_ROWS);
+			break;
+		case 'o':
+			benchmark(binary_search_t, best_t, result, RESULT_ROWS);
+			break;
+		case 'p':
+			benchmark(binary_search_t, worst_t, result, RESULT_ROWS);
+			break;
+		case 'q':
+			benchmark(binary_search_t, average_t, result, RESULT_ROWS);
+			break;
+		// Invalid input
+		default:
+			show_menu = false;
+			ui_invalid_input();
+			break;
 		}
 	}
 	ui_exit();

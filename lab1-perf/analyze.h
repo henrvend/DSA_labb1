@@ -1,5 +1,6 @@
 #ifndef ANALYZE_H
 #define ANALYZE_H
+#define ARRAY_SIZE 512
 
 #define SIZE_START 512
 #define ITERATIONS 4
