@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 //
 // Private
 //
@@ -67,7 +68,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
         
         
         
-        printf("The program took %f seconds to execute while %d long\n", time_taken, strl);
+        printf("Size: %d   Time: %f", strl, time_taken);
 
         strl*=2;
     }
