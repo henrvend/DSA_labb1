@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <math.h>
 
 //
 // Private
@@ -16,15 +16,14 @@
 void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 {
     int strl = SIZE_START;
-    
+
     int arr[20000];
-   
-    
-    
-    for(int i=0; i<n;i++){
-        
+
+    for (int i = 0; i < n; i++)
+    {
+
         int start = strl;
-        
+
         for (int i = 0; i < strl; i++)
         {
             arr[i] = start;
@@ -32,48 +31,43 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
         }
         clock_t t;
         t = clock();
-        
+
         switch (a)
         {
-            case 0:
-                printf("\nBubblesort\n");
-                bubble_sort(arr, strl);
+        case 0:
+            printf("\nBubblesort\n");
+            bubble_sort(arr, strl);
             break;
 
-            case 1:
-                printf("\nInsertion\n");
-                insertion_sort(arr, strl);
-                break;
+        case 1:
+            printf("\nInsertion\n");
+            insertion_sort(arr, strl);
+            break;
 
-            case 2:
-                printf("Quick\n");
-                break;
+        case 2:
+            printf("Quick\n");
+            break;
 
-            case 3:
-                printf("Linear\n");
-                break;
+        case 3:
+            printf("Linear\n");
+            break;
 
-            case 4:
-                printf("Binary\n");
-                break;
+        case 4:
+            printf("Binary\n");
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
-        
 
         t = clock() - t;
-        
+
         double time_taken = ((double)t) / CLOCKS_PER_SEC;
-        
-        
-        
-        printf("Size: %d   Time: %f", strl, time_taken);
+        // Försök till T/nlogn
+        printf("Size: %d   Time: %f, T/nlogn: %f", strl, time_taken, (time_taken / (strl * log(strl))));
 
-        strl*=2;
+        strl *= 2;
     }
-
-    
 
     switch (c)
     {
