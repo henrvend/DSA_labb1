@@ -5,6 +5,8 @@
 #define SIZE_START 512
 #define ITERATIONS 4
 
+#include <math.h>
+
 // algorithm_t defines different algorithms
 typedef enum {
 	bubble_sort_t,
@@ -30,5 +32,7 @@ typedef struct {
 // benchmark benchmarks an algorithm a for a specific case c, writing n results
 // to the result buffer buf
 void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n);
-
+void random_array(int *arr, int n);
+void orderd_array(int *arr, int n);
+void reverse_array(int *arr, int n);
 #endif

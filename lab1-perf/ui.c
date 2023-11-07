@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+
 //
 // Private
 //
@@ -101,7 +102,7 @@ void ui_run()
 		// Bubble sort
 		case 'c':
 			benchmark(bubble_sort_t, best_t, result, RESULT_ROWS);
-			//printf("todo> implemenet BE + present results in FE\n");
+			// printf("todo> implemenet BE + present results in FE\n");
 			break;
 		case 'd':
 			benchmark(bubble_sort_t, worst_t, result, RESULT_ROWS);
@@ -153,4 +154,12 @@ void ui_run()
 		}
 	}
 	ui_exit();
+}
+void print_results(result_t *buf, int n)
+{
+	for(int i=0; i<n; i++){
+		printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, buf[i].time, (buf[i].time / (buf[i].size * log(buf[i].size))));
+	}
+	
+	//printf("Size: %d   Time: %f, T/nlogn: %f", strl, time_taken, (time_taken / (strl * log(strl))));
 }

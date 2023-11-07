@@ -1,10 +1,10 @@
 #include "analyze.h"
 #include "algorithm.h"
+#include "ui.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 //
 // Private
@@ -17,7 +17,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 {
     int strl = SIZE_START;
 
-    int arr[20000];
+    int arr[16500];
 
     for (int i = 0; i < n; i++)
     {
@@ -34,56 +34,162 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 
         switch (a)
         {
-        case 0:
-            printf("\nBubblesort\n");
+        case 0: // Bubble
+            switch (c)
+            {
+            case 0:
+                orderd_array(arr, strl);
+                break;
+            case 1:
+                /* code */
+                break;
+            case 2:
+                /* code */
+                random_array(arr, strl);
+                break;
+
+            default:
+                break;
+            }
+            t = clock();
             bubble_sort(arr, strl);
+            t = clock() - t;
             break;
 
-        case 1:
-            printf("\nInsertion\n");
+        case 1: // Insertion
+            switch (c)
+            {
+            case 0:
+                /* code */
+                break;
+            case 1:
+                /* code */
+                break;
+            case 2:
+                /* code */
+                break;
+
+            default:
+                break;
+            }
             insertion_sort(arr, strl);
             break;
 
-        case 2:
-            printf("Quick\n");
+        case 2: // Quick
+            switch (c)
+            {
+            case 0:
+                /* code */
+                break;
+            case 1:
+                /* code */
+                break;
+            case 2:
+                /* code */
+                break;
+
+            default:
+                break;
+            }
             break;
 
         case 3:
             printf("Linear\n");
+            switch (c)
+            {
+            case 0:
+                /* code */
+                break;
+            case 1:
+                /* code */
+                break;
+            case 2:
+                /* code */
+                break;
+
+            default:
+                break;
+            }
             break;
 
         case 4:
             printf("Binary\n");
+            switch (c)
+            {
+            case 0:
+                /* code */
+                break;
+            case 1:
+                /* code */
+                break;
+            case 2:
+                /* code */
+                break;
+
+            default:
+                break;
+            }
             break;
 
         default:
             break;
         }
 
-        t = clock() - t;
+        
 
         double time_taken = ((double)t) / CLOCKS_PER_SEC;
         // Försök till T/nlogn
-        printf("Size: %d   Time: %f, T/nlogn: %f", strl, time_taken, (time_taken / (strl * log(strl))));
+        buf[i].size = strl;
+        buf[i].time = time_taken;
 
         strl *= 2;
     }
 
-    switch (c)
+    print_results(buf, n);
+}
+
+void orderd_array(int *arr, int n)
+{
+    for (int i = 0; i < n; i++)
     {
-    case 0:
-        printf("\nBest\n");
-        break;
+        arr[i] = i;
+    }
+}
 
-    case 1:
-        printf("\nWorst\n");
-        break;
+void reverse_array(int *arr, int n)
+{
+    int j = 0;
+    for (int i = n; i > 0; i--)
+    {
+        arr[j] = i;
+        j++;
+    }
+}
 
-    case 2:
-        printf("\nAverage\n");
-        break;
+void random_array(int *arr, int n)
+{
+    srand(time(NULL));
 
-    default:
-        break;
+    for (int i = 0; i < n; i++)
+    {
+        int random_value;
+        int exists = 1;
+        do
+        {
+            random_value = rand() % (n - 0 + 1) + 0;
+            exists = 1;
+
+            for (int j = 0; j < i; j++)
+            {
+                if (arr[j] == random_value)
+                {
+                    break;
+                }
+                exists = 0;
+            }
+        } while (exists);
+
+        arr[i] = random_value;
+        printf("%d ",random_value);
     }
 }
