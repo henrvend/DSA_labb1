@@ -1,6 +1,7 @@
 #include "analyze.h"
 #include "algorithm.h"
 #include "ui.h"
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -21,33 +22,31 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 
     for (int i = 0; i < n; i++)
     {
-
         int start = strl;
 
-        for (int i = 0; i < strl; i++)
+        for (int j = 0; j < strl; j++)
         {
-            arr[i] = start;
+            arr[j] = start;
             start--;
         }
         clock_t t;
-        t = clock();
+        // t = clock();
 
         switch (a)
         {
         case 0: // Bubble
+
             switch (c)
             {
             case 0:
                 orderd_array(arr, strl);
                 break;
             case 1:
-                /* code */
+                reverse_array(arr, strl);
                 break;
             case 2:
-                /* code */
                 random_array(arr, strl);
                 break;
-
             default:
                 break;
             }
@@ -60,72 +59,64 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             switch (c)
             {
             case 0:
-                /* code */
+                orderd_array(arr, strl);
                 break;
             case 1:
-                /* code */
+                reverse_array(arr, strl);
                 break;
             case 2:
-                /* code */
+                random_array(arr, strl);
                 break;
-
             default:
                 break;
             }
-            insertion_sort(arr, strl);
+            t = clock();
+            for (int k = 0; k < 10; k++)
+            {
+                insertion_sort(arr, strl);
+            }
+            t = clock() - t;
             break;
 
         case 2: // Quick
             switch (c)
             {
             case 0:
-                /* code */
                 break;
             case 1:
-                /* code */
                 break;
             case 2:
-                /* code */
                 break;
-
             default:
                 break;
             }
             break;
 
-        case 3:
+        case 3: // Linear
             printf("Linear\n");
             switch (c)
             {
             case 0:
-                /* code */
                 break;
             case 1:
-                /* code */
                 break;
             case 2:
-                /* code */
                 break;
-
             default:
                 break;
             }
             break;
 
-        case 4:
+        case 4: // Binary
             printf("Binary\n");
             switch (c)
             {
             case 0:
-                /* code */
                 break;
             case 1:
-                /* code */
                 break;
             case 2:
-                /* code */
                 break;
-
             default:
                 break;
             }
@@ -135,10 +126,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             break;
         }
 
-        
-
         double time_taken = ((double)t) / CLOCKS_PER_SEC;
-        // Försök till T/nlogn
         buf[i].size = strl;
         buf[i].time = time_taken;
 
@@ -190,6 +178,6 @@ void random_array(int *arr, int n)
         } while (exists);
 
         arr[i] = random_value;
-        printf("%d ",random_value);
+        printf("%d ", random_value);
     }
 }
