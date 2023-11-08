@@ -30,7 +30,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             start--;
         }
         clock_t t;
-        // t = clock();
+        t = clock();
 
         switch (a)
         {
