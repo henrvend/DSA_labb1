@@ -29,8 +29,10 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             arr[j] = start;
             start--;
         }
-        clock_t t;
-        t = clock();
+        struct timespec start_time, end_time;
+
+        // clock_t t;
+        // t = clock();
 
         switch (a)
         {
@@ -50,9 +52,11 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             default:
                 break;
             }
-            t = clock();
+            //Bättra hantering för nanosekunder behövs, just nu hanteras endast nano.
+            clock_gettime(CLOCK_REALTIME, &start_time);
             bubble_sort(arr, strl);
-            t = clock() - t;
+            clock_gettime(CLOCK_REALTIME, &end_time);
+            // t = clock() - t;
             break;
 
         case 1: // Insertion
@@ -70,12 +74,12 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             default:
                 break;
             }
-            t = clock();
+            //t = clock();
             for (int k = 0; k < 10; k++)
             {
                 insertion_sort(arr, strl);
             }
-            t = clock() - t;
+            //t = clock() - t;
             break;
 
         case 2: // Quick
@@ -126,9 +130,10 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             break;
         }
 
-        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+        //double time_taken = ((double)t) / CLOCKS_PER_SEC;
         buf[i].size = strl;
-        buf[i].time = time_taken;
+        //buf[i].time = time_taken;
+        buf[i].time = end_time.tv_nsec - start_time.tv_nsec;
 
         strl *= 2;
     }
