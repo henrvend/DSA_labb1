@@ -1,12 +1,6 @@
 #include "analyze.h"
 #include "algorithm.h"
 #include "ui.h"
-
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-
 //
 // Private
 //
@@ -19,127 +13,67 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
     int strl = SIZE_START;
 
     int arr[16500];
-
+    int v;
     for (int i = 0; i < n; i++)
     {
-        int start = strl;
-
-        for (int j = 0; j < strl; j++)
-        {
-            arr[j] = start;
-            start--;
-        }
         struct timespec start_time, end_time;
-
-        // clock_t t;
-        // t = clock();
 
         switch (a)
         {
         case 0: // Bubble
-
-            switch (c)
-            {
-            case 0:
-                orderd_array(arr, strl);
-                break;
-            case 1:
-                reverse_array(arr, strl);
-                break;
-            case 2:
-                random_array(arr, strl);
-                break;
-            default:
-                break;
-            }
-            //Bättra hantering för nanosekunder behövs, just nu hanteras endast nano.
+            getArray(arr, c, strl);
+            // Bättra hantering för nanosekunder behövs, just nu hanteras endast nano.
             clock_gettime(CLOCK_REALTIME, &start_time);
             bubble_sort(arr, strl);
             clock_gettime(CLOCK_REALTIME, &end_time);
-            // t = clock() - t;
             break;
 
         case 1: // Insertion
-            switch (c)
-            {
-            case 0:
-                orderd_array(arr, strl);
-                break;
-            case 1:
-                reverse_array(arr, strl);
-                break;
-            case 2:
-                random_array(arr, strl);
-                break;
-            default:
-                break;
-            }
-            //t = clock();
-            for (int k = 0; k < 10; k++)
-            {
-                insertion_sort(arr, strl);
-            }
-            //t = clock() - t;
+            getArray(arr, c, strl);
+            clock_gettime(CLOCK_REALTIME, &start_time);
+            insertion_sort(arr, strl);
+            clock_gettime(CLOCK_REALTIME, &end_time);
             break;
 
         case 2: // Quick
-            switch (c)
-            {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                break;
-            }
+            getArray(arr, c, strl);
+            clock_gettime(CLOCK_REALTIME, &start_time);
+            quick_sort(arr, strl);
+            clock_gettime(CLOCK_REALTIME, &end_time);
             break;
 
         case 3: // Linear
-            printf("Linear\n");
-            switch (c)
-            {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                break;
-            }
+            v = 0;
+            getArray(arr, c, strl);
+            clock_gettime(CLOCK_REALTIME, &start_time);
+            linear_search(arr, strl, v);
+            clock_gettime(CLOCK_REALTIME, &end_time);
             break;
 
         case 4: // Binary
-            printf("Binary\n");
-            switch (c)
-            {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                break;
-            }
-            break;
-
+            v = 0;
+            getArray(arr, c, strl);
+            clock_gettime(CLOCK_REALTIME, &start_time);
+            binary_search(arr, strl, v);
+            clock_gettime(CLOCK_REALTIME, &end_time);
         default:
             break;
         }
 
-        //double time_taken = ((double)t) / CLOCKS_PER_SEC;
         buf[i].size = strl;
-        //buf[i].time = time_taken;
         buf[i].time = end_time.tv_nsec - start_time.tv_nsec;
-
         strl *= 2;
     }
 
-    print_results(buf, n);
+
+    /*Switch for printing right sort/search sequence*/
+    print_results(buf, n, a, c);
+    
+
 }
+
+/*--------------Array handling-----------------*/
+/*---------------------------------------------*/
 
 void orderd_array(int *arr, int n)
 {
@@ -165,24 +99,35 @@ void random_array(int *arr, int n)
 
     for (int i = 0; i < n; i++)
     {
-        int random_value;
-        int exists = 1;
-        do
-        {
-            random_value = rand() % (n - 0 + 1) + 0;
-            exists = 1;
+        arr[i] = i;
+    }
 
-            for (int j = 0; j < i; j++)
-            {
-                if (arr[j] == random_value)
-                {
-                    break;
-                }
-                exists = 0;
-            }
-        } while (exists);
+    for (int i = n - 1; i > 0; i--)
+    {
+        int j = rand() % (i + 1);
 
-        arr[i] = random_value;
-        printf("%d ", random_value);
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+
+
+/*Get right array for the job*/
+void getArray(int *arr, int c, int strl)
+{
+    switch (c)
+    {
+    case 0: // best
+        orderd_array(arr, strl);
+        break;
+    case 1: // worst
+        reverse_array(arr, strl);
+        break;
+    case 2: // average
+        random_array(arr, strl);
+        break;
+    default:
+        break;
     }
 }

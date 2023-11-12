@@ -6,6 +6,10 @@
 #define ITERATIONS 4
 
 #include <math.h>
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <string.h>
 
 // algorithm_t defines different algorithms
 typedef enum {
@@ -35,4 +39,5 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n);
 void random_array(int *arr, int n);
 void orderd_array(int *arr, int n);
 void reverse_array(int *arr, int n);
+void getArray(int *arr, int c, int strl);
 #endif

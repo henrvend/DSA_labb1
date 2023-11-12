@@ -1,12 +1,6 @@
 #include "ui.h"
 #include "io.h"
 #include "analyze.h"
-
-#include <stdbool.h>
-#include <stdio.h>
-#include <math.h>
-
-
 //
 // Private
 //
@@ -156,11 +150,97 @@ void ui_run()
 	}
 	ui_exit();
 }
-void print_results(result_t *buf, int n)
+void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 {
-	for(int i=0; i<n; i++){
-		printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, buf[i].time, (buf[i].time / (buf[i].size * log(buf[i].size))));
+	char str[25];
+
+	switch (c)
+	{
+	case 0:
+		strcpy(str, "Best");
+		break;
+	case 1:
+		strcpy(str, "Worst");
+		break;
+	case 2:
+		strcpy(str, "Average");
+		break;
+
+	default:
+		break;
 	}
-	
-	//printf("Size: %d   Time: %f, T/nlogn: %f", strl, time_taken, (time_taken / (strl * log(strl))));
+
+	switch (a)
+	{
+	case 0: // bubble
+		ui_line('*', PRINT_WIDTH);
+		printf("%40s %s\n", "Bubble sort: ", str);
+		ui_line('=', PRINT_WIDTH);
+
+		switch (c)
+		{
+		case 0:
+			printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n", "T/nlog");
+			ui_line('-', PRINT_WIDTH);
+			for (int i = 0; i < n; i++)
+			{
+				float time = buf[i].time / 1000000000L;
+				printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / buf[i].size, (time / (log(buf[i].size))));
+			}
+			break;
+		case 1:
+			printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n^2", "T/n^3");
+			ui_line('-', PRINT_WIDTH);
+			for (int i = 0; i < n; i++)
+			{
+				float time = buf[i].time / 1000000000L;
+				printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / (buf[i].size*buf[i].size), (time / (buf[i].size*buf[i].size*buf[i].size)));
+			}
+			break;
+		case 2:
+			printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n", "T/nlog");
+			ui_line('-', PRINT_WIDTH);
+			for (int i = 0; i < n; i++)
+			{
+				float time = buf[i].time / 1000000000L;
+				printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / buf[i].size, (time / (log(buf[i].size))));
+			}
+			break;
+
+		default:
+			break;
+		}
+
+		break;
+	case 1: // Insertion
+		for (int i = 0; i < n; i++)
+		{
+			float time = buf[i].time / 1000000000L;
+			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / buf[i].size, (time / (log(buf[i].size))));
+		}
+		break;
+	case 2: // quick
+		for (int i = 0; i < n; i++)
+		{
+			float time = buf[i].time / 1000000000L;
+			printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, time, (buf[i].time / (buf[i].size * log(buf[i].size))));
+		}
+		break;
+	case 3: // Linear
+		for (int i = 0; i < n; i++)
+		{
+			float time = buf[i].time / 1000000000L;
+			printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, time, (buf[i].time / (buf[i].size * log(buf[i].size))));
+		}
+		break;
+	case 4: // Binary
+		for (int i = 0; i < n; i++)
+		{
+			float time = buf[i].time / 1000000000L;
+			printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, time, (buf[i].time / (buf[i].size * log(buf[i].size))));
+		}
+		break;
+	default:
+		break;
+	}
 }
