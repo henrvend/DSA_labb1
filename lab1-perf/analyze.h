@@ -4,7 +4,7 @@
 
 #define MAX_SIZE 16384
 #define ITERATIONS 4
-#define SEARCH_LOOP 1000
+#define SEARCH_LOOP 10000
 #define TIMES_TWO 2
 
 #include <math.h>
