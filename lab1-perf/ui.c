@@ -152,18 +152,19 @@ void ui_run()
 }
 void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 {
-	char str[25];
+	char case_type[CASE_NAME];
+	char array_type[ARRAY_NAME];
 
 	switch (c)
 	{
 	case 0:
-		strcpy(str, "Best");
+		strcpy(case_type, "Best");
 		break;
 	case 1:
-		strcpy(str, "Worst");
+		strcpy(case_type, "Worst");
 		break;
 	case 2:
-		strcpy(str, "Average");
+		strcpy(case_type, "Average");
 		break;
 
 	default:
@@ -173,74 +174,120 @@ void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 	switch (a)
 	{
 	case 0: // bubble
-		ui_line('*', PRINT_WIDTH);
-		printf("%40s %s\n", "Bubble sort: ", str);
-		ui_line('=', PRINT_WIDTH);
-
-		switch (c)
-		{
-		case 0:
-			printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n", "T/nlog");
-			ui_line('-', PRINT_WIDTH);
-			for (int i = 0; i < n; i++)
-			{
-				float time = buf[i].time / 1000000000L;
-				printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / buf[i].size, (time / (log(buf[i].size))));
-			}
-			break;
-		case 1:
-			printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n^2", "T/n^3");
-			ui_line('-', PRINT_WIDTH);
-			for (int i = 0; i < n; i++)
-			{
-				float time = buf[i].time / 1000000000L;
-				printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / (buf[i].size*buf[i].size), (time / (buf[i].size*buf[i].size*buf[i].size)));
-			}
-			break;
-		case 2:
-			printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n", "T/nlog");
-			ui_line('-', PRINT_WIDTH);
-			for (int i = 0; i < n; i++)
-			{
-				float time = buf[i].time / 1000000000L;
-				printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / buf[i].size, (time / (log(buf[i].size))));
-			}
-			break;
-
-		default:
-			break;
-		}
-
+		strcpy(array_type, "Bubble sort: ");
+		print_array_sort(buf, n, c, case_type, array_type);
 		break;
+
 	case 1: // Insertion
-		for (int i = 0; i < n; i++)
-		{
-			float time = buf[i].time / 1000000000L;
-			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", buf[i].size, time, (time / (buf[i].size * log(buf[i].size))), time / buf[i].size, (time / (log(buf[i].size))));
-		}
+		strcpy(array_type, "Insertion: ");
+		print_array_sort(buf, n, c, case_type, array_type);
 		break;
 	case 2: // quick
 		for (int i = 0; i < n; i++)
 		{
-			float time = buf[i].time / 1000000000L;
+			double time = buf[i].time / BILLION;
 			printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, time, (buf[i].time / (buf[i].size * log(buf[i].size))));
 		}
 		break;
 	case 3: // Linear
-		for (int i = 0; i < n; i++)
-		{
-			float time = buf[i].time / 1000000000L;
-			printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, time, (buf[i].time / (buf[i].size * log(buf[i].size))));
-		}
+		strcpy(array_type, "Linear: ");
+		print_array_search(buf, n, c, case_type, array_type);
 		break;
 	case 4: // Binary
-		for (int i = 0; i < n; i++)
-		{
-			float time = buf[i].time / 1000000000L;
-			printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, time, (buf[i].time / (buf[i].size * log(buf[i].size))));
-		}
+		strcpy(array_type, "Binary: ");
+		print_array_search(buf, n, c, case_type, array_type);
 		break;
 	default:
 		break;
 	}
+}
+
+void print_array_sort(result_t *buf, int n, case_t c, char *str, char *name)
+{
+	ui_line('*', PRINT_WIDTH);
+	printf("%40s %s\n", name, str);
+	ui_line('=', PRINT_WIDTH);
+
+	switch (c)
+	{
+	case 0:
+		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n", "T/nlog");
+		ui_line('-', PRINT_WIDTH);
+		for (int i = 0; i < n; i++)
+		{
+			double time = buf[i].time / BILLION;
+			int size = buf[i].size;
+			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / size, (time / (log(size))));
+		}
+		break;
+	case 1:
+		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n^2", "T/n^3");
+		ui_line('-', PRINT_WIDTH);
+		for (int i = 0; i < n; i++)
+		{
+			double time = buf[i].time / BILLION;
+			int size = buf[i].size;
+			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / (size * size), (time / (size * size * size)));
+		}
+		break;
+	case 2:
+		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n^2", "T/2n");
+		ui_line('-', PRINT_WIDTH);
+		for (int i = 0; i < n; i++)
+		{
+			double time = buf[i].time / BILLION;
+			int size = buf[i].size;
+			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / (size * size), time / (size * 2));
+		}
+		break;
+
+	default:
+		break;
+	}
+	ui_line('=', PRINT_WIDTH);
+}
+
+void print_array_search(result_t *buf, int n, case_t c, char *str, char *name)
+{
+	ui_line('*', PRINT_WIDTH);
+	printf("%40s %s\n", name, str);
+	ui_line('=', PRINT_WIDTH);
+
+	switch (c)
+	{
+	case 0:
+		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/1", "T/n", "T/(n/2)");
+		ui_line('-', PRINT_WIDTH);
+		for (int i = 0; i < n; i++)
+		{
+			double time = buf[i].time / BILLION;
+			int size = buf[i].size;
+			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, time / 1, time / size, (time / (size / 2)));
+		}
+		break;
+	case 1:
+		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/logn", "T/n", "T/1");
+		ui_line('-', PRINT_WIDTH);
+		for (int i = 0; i < n; i++)
+		{
+			double time = buf[i].time / BILLION;
+			int size = buf[i].size;
+			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (log(size))), time / size, (time / 1));
+		}
+		break;
+	case 2:
+		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/logn", "T/n", "T/(n/2)");
+		ui_line('-', PRINT_WIDTH);
+		for (int i = 0; i < n; i++)
+		{
+			double time = buf[i].time / BILLION;
+			int size = buf[i].size;
+			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (log(size))), time / size, time / (size / 2));
+		}
+		break;
+
+	default:
+		break;
+	}
+	ui_line('=', PRINT_WIDTH);
 }

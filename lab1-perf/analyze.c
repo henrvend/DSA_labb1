@@ -6,13 +6,13 @@
 //
 
 //
-// Public
+//
 //
 void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 {
-    int strl = SIZE_START;
+    int strl = ARRAY_SIZE;
 
-    int arr[16500];
+    int arr[MAX_SIZE];
     int v;
     for (int i = 0; i < n; i++)
     {
@@ -22,7 +22,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
         {
         case 0: // Bubble
             getArray(arr, c, strl);
-            // Bättra hantering för nanosekunder behövs, just nu hanteras endast nano.
+
             clock_gettime(CLOCK_REALTIME, &start_time);
             bubble_sort(arr, strl);
             clock_gettime(CLOCK_REALTIME, &end_time);
@@ -43,33 +43,42 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             break;
 
         case 3: // Linear
-            v = 0;
-            getArray(arr, c, strl);
+            orderd_array(arr, strl);
+            v = get_v(arr, c, a, strl);
             clock_gettime(CLOCK_REALTIME, &start_time);
+            for (int j = 0; j < SEARCH_LOOP; j++)
+            {
             linear_search(arr, strl, v);
+            }
             clock_gettime(CLOCK_REALTIME, &end_time);
             break;
 
         case 4: // Binary
-            v = 0;
             getArray(arr, c, strl);
+            v = get_v(arr, c, a, strl);
             clock_gettime(CLOCK_REALTIME, &start_time);
-            binary_search(arr, strl, v);
+            for (int j = 0; j < SEARCH_LOOP; j++)
+            {
+                binary_search(arr, strl, v);
+            }
             clock_gettime(CLOCK_REALTIME, &end_time);
         default:
             break;
         }
 
+        /*Lägger till värden i buf* för att skicka med till printfunktionen*/
         buf[i].size = strl;
         buf[i].time = end_time.tv_nsec - start_time.tv_nsec;
-        strl *= 2;
-    }
 
+        if (buf[i].time < 0)
+        {
+            buf[i].time = (end_time.tv_nsec + BILLION) - start_time.tv_nsec;
+        }
+        strl *= TIMES_TWO;
+    }
 
     /*Switch for printing right sort/search sequence*/
     print_results(buf, n, a, c);
-    
-
 }
 
 /*--------------Array handling-----------------*/
@@ -112,7 +121,6 @@ void random_array(int *arr, int n)
     }
 }
 
-
 /*Get right array for the job*/
 void getArray(int *arr, int c, int strl)
 {
@@ -130,4 +138,23 @@ void getArray(int *arr, int c, int strl)
     default:
         break;
     }
+}
+
+int get_v(int *arr, case_t c, algorithm_t a, int n)
+{
+    switch (c)
+    {
+    case 0:
+        return (a == 3) ? arr[0] : arr[n / 2];
+        break;
+    case 1:
+        return (a == 3) ? arr[n - 1] : arr[0];
+        break;
+    case 2:
+        return (a == 3) ? arr[n / 2] : arr[0];
+        break;
+    default:
+        break;
+    }
+    return 0;
 }
