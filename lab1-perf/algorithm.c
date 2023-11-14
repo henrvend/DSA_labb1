@@ -17,19 +17,20 @@ void quickSort(int *a, int low, int high)
 
 int partition(int a[], int low, int high)
 {
-    int index = low;
-    int pivot = a[high];
-    int i;
-    for(i = low; i < high; i++)
-    {
-        if(a[i] < pivot)
-        {
-            swap(&a[i], &a[index]);
-            index++;
-        }
-    }
-    swap(&a[high], &a[index]);
-    return index;
+	int index = low;
+	// a[high]
+	int pivot = low + (low - high) / 2;
+	int i;
+	for (i = low; i < high; i++)
+	{
+		if (a[i] < pivot)
+		{
+			swap(&a[i], &a[index]);
+			index++;
+		}
+	}
+	swap(&a[high], &a[index]);
+	return index;
 }
 
 void swap(int *x, int *y)
@@ -72,7 +73,7 @@ void insertion_sort(int *a, int n)
 		while (j >= 0 && a[j] > key)
 		{
 			a[j + 1] = a[j];
-			j = j - 1;
+			j--;
 		}
 		a[j + 1] = key;
 	}
@@ -81,16 +82,12 @@ void insertion_sort(int *a, int n)
 /* Quick sort starts here*/
 void quick_sort(int *a, int n)
 {
-	int high = n - 1;
-
-	quickSort(a, 0, high);
+	quickSort(a, 0, n - 1);
 
 	for (int i = 0; i < n; i++)
 	{
-		printf("%d ", a[i]);
+		printf("%d\n", a[i]);
 	}
-
-	printf("\n");
 }
 
 /*Quick sort ends here*/
