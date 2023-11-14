@@ -291,3 +291,21 @@ void print_array_search(result_t *buf, int n, case_t c, char *str, char *name)
 	}
 	ui_line('=', PRINT_WIDTH);
 }
+
+/*void print(result_t *buf, case_t c, int one, int two, int three)
+{
+
+	ui_line('*', PRINT_WIDTH);
+	printf("%40s %s\n", c, str);
+	ui_line('=', PRINT_WIDTH);
+
+	char arr[3][7];
+	arr[0][one];
+	char text1[7];
+	strcpy(text1, arr[0][one]);
+
+	printf("spacing", "Size", "time T(s)", text1, text2, text3);
+
+
+	printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn = 1 ", "T/logn = 2", "T/n^2 = 3 ", "T/n^3 = 4 ", "T/2n = 5 ", "T/1 = 6", "T/n = 7 ", "T/(n/2) = 8 ");
+}*/

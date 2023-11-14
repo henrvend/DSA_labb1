@@ -18,8 +18,7 @@ void quickSort(int *a, int low, int high)
 int partition(int a[], int low, int high)
 {
 	int index = low;
-	// a[high]
-	int pivot = low + (low - high) / 2;
+	int pivot = a[high];
 	int i;
 	for (i = low; i < high; i++)
 	{
@@ -86,8 +85,9 @@ void quick_sort(int *a, int n)
 
 	for (int i = 0; i < n; i++)
 	{
-		printf("%d\n", a[i]);
+		printf("%d ", a[i]);
 	}
+	printf("\n");
 }
 
 /*Quick sort ends here*/

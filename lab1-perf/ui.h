@@ -7,6 +7,7 @@
 #define BILLION 1000000000L
 #define ARRAY_NAME 25
 #define CASE_NAME 25
+#define spacing "\n%-12s %12s %15s %15s %15s\n"
 
 #include "analyze.h"
 
@@ -19,5 +20,6 @@ void ui_run();
 void print_results(result_t *buf, int n,  algorithm_t a, case_t c);
 void print_array_sort(result_t *buf, int n, case_t c, char *str, char *name);
 void print_array_search(result_t *buf, int n, case_t c, char *str, char *name);
+void print(result_t *buf, case_t c, int one, int two, int three);
 
 #endif
