@@ -4,6 +4,42 @@
 // Private
 //
 
+/*Quicksort starts here*/
+void quickSort(int *a, int low, int high)
+{
+	if (low < high)
+	{
+		int p = partition(a, low, high);
+		quickSort(a, low, p - 1);
+		quickSort(a, p + 1, high);
+	}
+}
+
+int partition(int a[], int low, int high)
+{
+    int index = low;
+    int pivot = a[high];
+    int i;
+    for(i = low; i < high; i++)
+    {
+        if(a[i] < pivot)
+        {
+            swap(&a[i], &a[index]);
+            index++;
+        }
+    }
+    swap(&a[high], &a[index]);
+    return index;
+}
+
+void swap(int *x, int *y)
+{
+	int t = *x;
+	*x = *y;
+	*y = t;
+}
+/*Quicksort ends here*/
+
 //
 // Public
 //
@@ -45,15 +81,16 @@ void insertion_sort(int *a, int n)
 /* Quick sort starts here*/
 void quick_sort(int *a, int n)
 {
-	int low = 0;
 	int high = n - 1;
 
-	while (low < high)
-	{
-		// int pivot = a[high];
+	quickSort(a, 0, high);
 
-		// int index = low - 1;
+	for (int i = 0; i < n; i++)
+	{
+		printf("%d ", a[i]);
 	}
+
+	printf("\n");
 }
 
 /*Quick sort ends here*/
