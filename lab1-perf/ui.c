@@ -208,6 +208,10 @@ void print_array_sort(result_t *buf, int n, case_t c, char *str, char *name)
 	printf("%40s %s\n", name, str);
 	ui_line('=', PRINT_WIDTH);
 
+	result_t result;   // Skapa en instans av result_t
+	case_t myCase = c; // Skapa en instans av case_t
+	printAdam(&result, myCase, 1, 2, 3);
+
 	switch (c)
 	{
 	case 0:
@@ -292,20 +296,31 @@ void print_array_search(result_t *buf, int n, case_t c, char *str, char *name)
 	ui_line('=', PRINT_WIDTH);
 }
 
-/*void print(result_t *buf, case_t c, int one, int two, int three)
+/*
+
+void printAdam(result_t *buf, case_t c, int one, int two, int three)
 {
+	printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", viewNames[one], viewNames[two], viewNames[three]);
+	ui_line('-', PRINT_WIDTH);
+	for (int i = 0; i < n; i++)
+	{
+		double time = buf[i].time / BILLION;
+		int size = buf[i].size;
+		printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / (size * size), time / (size * 2));
+	}
 
-	ui_line('*', PRINT_WIDTH);
-	printf("%40s %s\n", c, str);
-	ui_line('=', PRINT_WIDTH);
+	//Kvar från igår eftermiddags.
+		/*char arr[3][7];
+		arr[0][one];
+		char text1[7];
+		strcpy(text1, arr[0][one]);
 
-	char arr[3][7];
-	arr[0][one];
-	char text1[7];
-	strcpy(text1, arr[0][one]);
-
-	printf("spacing", "Size", "time T(s)", text1, text2, text3);
+		printf("spacing", "Size", "time T(s)", text1, text2, text3);
 
 
-	printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn = 1 ", "T/logn = 2", "T/n^2 = 3 ", "T/n^3 = 4 ", "T/2n = 5 ", "T/1 = 6", "T/n = 7 ", "T/(n/2) = 8 ");
-}*/
+		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn = 1 ", "T/logn = 2", "T/n^2 = 3 ", "T/n^3 = 4 ", "T/2n = 5 ", "T/1 = 6", "T/n = 7 ", "T/(n/2) = 8 ");
+		
+}
+
+
+*/
