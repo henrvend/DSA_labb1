@@ -18,8 +18,12 @@ void quickSort(int *a, int low, int high)
 int partition(int a[], int low, int high)
 {
 	int index = low;
-	int pivot = a[high];
+	int mid = (low + high) / 2;
+	int pivot = a[mid];
 	int i;
+
+	swap(&a[mid], &a[high]);
+
 	for (i = low; i < high; i++)
 	{
 		if (a[i] < pivot)
@@ -78,19 +82,21 @@ void insertion_sort(int *a, int n)
 	}
 }
 
-/* Quick sort starts here*/
 void quick_sort(int *a, int n)
 {
 	quickSort(a, 0, n - 1);
 
 	for (int i = 0; i < n; i++)
 	{
+		if (i % 20 == 0)
+		{
+			printf("\n");
+		}
 		printf("%d ", a[i]);
 	}
 	printf("\n");
 }
 
-/*Quick sort ends here*/
 bool linear_search(const int *a, int n, int v)
 {
 	for (int i = 0; i < n; i++)
@@ -98,7 +104,7 @@ bool linear_search(const int *a, int n, int v)
 		if (a[i] == v)
 			return true;
 	}
-	return false; // TODO: linear search
+	return false;
 }
 
 bool binary_search(const int *a, int n, int v)

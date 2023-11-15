@@ -15,31 +15,24 @@
 #include <stdio.h>
 #include <math.h>
 
-const char *viewNames[] = {
-    "T/nlogn",
-    "T/logn",
-    "T/n^2",
-    "T/n^3",
-    "T/2n",
-    "T/1",
-    "T/n",
-    "T/(n/2)"};
-const char *calculation[] = {
-    "(time / (size * log(size)))",
-    "T/logn",
-    "time / (size * size)",
-    "(time / (size * size * size))",
-    "time / (size * 2)",
-    "(time / 1)",
-    "time / size",
-    "(time / (size / 2))"
-};
+typedef enum
+{
+	T_DIV_N_LOG_N_t,
+	T_DIV_LOG_N_t,
+	T_DIV_N_RAISED_2_t,
+    T_DIV_N_RAISED_3_t,
+    T_DIV_TWO_N_t,
+    T_DIV_ONE_t,
+    T_DIV_N_t,
+    T_DIV_N_DIV_2_t
+} viewName_t;
 
 // ui_run starts a terminal-based user interface
 void ui_run();
 void print_results(result_t *buf, int n, algorithm_t a, case_t c);
-void print_array_sort(result_t *buf, int n, case_t c, char *str, char *name);
-void print_array_search(result_t *buf, int n, case_t c, char *str, char *name);
+void print_array_sort(result_t *buf, int n, case_t c, algorithm_t a);
+void print_array_search(result_t *buf, int n, case_t c, algorithm_t a);
 void printAdam(result_t *buf, case_t c, int one, int two, int three);
+void printLines(algorithm_t a, case_t c, result_t *buf, int size, int x, int y, int z);
 
 #endif

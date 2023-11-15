@@ -2,7 +2,7 @@
 #include "io.h"
 #include "analyze.h"
 //
-// Private
+//  Private
 //
 static void ui_invalid_input()
 {
@@ -67,6 +67,41 @@ static void ui_menu()
 	ui_menu_options(options, sizeof(options) / sizeof(char *));
 	ui_line('-', MENU_WIDTH);
 }
+
+static char *getCaseTypeString(case_t c)
+{
+	switch (c)
+	{
+	case 0:
+		return "Best";
+	case 1:
+		return "Worst";
+	case 2:
+		return "Average";
+	default:
+		return NULL;
+	}
+}
+
+static char *getAlgorithmString(algorithm_t a)
+{
+	switch (a)
+	{
+	case 0:
+		return "Bubble sort";
+	case 1:
+		return "Insertion sort";
+	case 2:
+		return "Quick sort";
+	case 3:
+		return "Linear search";
+	case 4:
+		return "Binary search";
+	default:
+		return NULL;
+	}
+}
+
 
 //
 // Public
@@ -152,175 +187,83 @@ void ui_run()
 }
 void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 {
-	char case_type[CASE_NAME];
-	char array_type[ARRAY_NAME];
-
-	switch (c)
-	{
-	case 0:
-		strcpy(case_type, "Best");
-		break;
-	case 1:
-		strcpy(case_type, "Worst");
-		break;
-	case 2:
-		strcpy(case_type, "Average");
-		break;
-
-	default:
-		break;
-	}
-
 	switch (a)
 	{
 	case 0: // bubble
-		strcpy(array_type, "Bubble sort: ");
-		print_array_sort(buf, n, c, case_type, array_type);
+		switch (c)
+		{
+		case 0: printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_N_RAISED_2_t);		break;
+		case 1:	printLines(a, c, buf, n, T_DIV_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);	break;
+		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
+		default: break;
+		}
 		break;
-
-	case 1: // Insertion
-		strcpy(array_type, "Insertion: ");
-		print_array_sort(buf, n, c, case_type, array_type);
+	case 1: // insertion
+		switch (c)
+		{
+		case 0:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
+		case 1:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_LOG_N_t);	break;
+		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
+		default: break;
+		}
 		break;
 	case 2: // quick
-		for (int i = 0; i < n; i++)
+		switch (c)
 		{
-			double time = buf[i].time / BILLION;
-			printf("Storlek: %d, Tid: %f, T/nlogn: %f\n", buf[i].size, time, (buf[i].time / (buf[i].size * log(buf[i].size))));
+		case 0:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
+		case 1:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);break;
+		case 2:	printLines(a, c, buf, n, T_DIV_N_RAISED_2_t, T_DIV_N_LOG_N_t, T_DIV_TWO_N_t);	break;
+		default: break;
 		}
 		break;
 	case 3: // Linear
-		strcpy(array_type, "Linear: ");
-		print_array_search(buf, n, c, case_type, array_type);
+		switch (c)
+		{
+		case 0:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);		break;
+		case 1:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);		break;
+		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); 	break;
+		default: break;
+		}
 		break;
 	case 4: // Binary
-		strcpy(array_type, "Binary: ");
-		print_array_search(buf, n, c, case_type, array_type);
+		switch (c)
+		{
+		case 0:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);	break;
+		case 1:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);	break;
+		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); break;
+		default: break;
+		}
 		break;
 	default:
 		break;
 	}
 }
 
-void print_array_sort(result_t *buf, int n, case_t c, char *str, char *name)
+
+void printLines(algorithm_t a, case_t c, result_t *buf, int n, int x, int y, int z)
 {
 	ui_line('*', PRINT_WIDTH);
-	printf("%40s %s\n", name, str);
+	printf("%40s: %s\n", getAlgorithmString(a), getCaseTypeString(c));
 	ui_line('=', PRINT_WIDTH);
 
-	result_t result;   // Skapa en instans av result_t
-	case_t myCase = c; // Skapa en instans av case_t
-	printAdam(&result, myCase, 1, 2, 3);
+	const char *viewName[] = {"T/nlogn", "T/logn", "T/n^2", "T/n^3", "T/2n", "T/1", "T/n", "T/(n/2)"};
 
-	switch (c)
-	{
-	case 0:
-		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n", "T/nlog");
-		ui_line('-', PRINT_WIDTH);
-		for (int i = 0; i < n; i++)
-		{
-			double time = buf[i].time / BILLION;
-			int size = buf[i].size;
-			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / size, (time / (log(size))));
-		}
-		break;
-	case 1:
-		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n^2", "T/n^3");
-		ui_line('-', PRINT_WIDTH);
-		for (int i = 0; i < n; i++)
-		{
-			double time = buf[i].time / BILLION;
-			int size = buf[i].size;
-			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / (size * size), (time / (size * size * size)));
-		}
-		break;
-	case 2:
-		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn", "T/n^2", "T/2n");
-		ui_line('-', PRINT_WIDTH);
-		for (int i = 0; i < n; i++)
-		{
-			double time = buf[i].time / BILLION;
-			int size = buf[i].size;
-			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / (size * size), time / (size * 2));
-		}
-		break;
-
-	default:
-		break;
-	}
-	ui_line('=', PRINT_WIDTH);
-}
-
-void print_array_search(result_t *buf, int n, case_t c, char *str, char *name)
-{
-	ui_line('*', PRINT_WIDTH);
-	printf("%40s %s\n", name, str);
-	ui_line('=', PRINT_WIDTH);
-
-	switch (c)
-	{
-	case 0:
-		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/1", "T/n", "T/(n/2)");
-		ui_line('-', PRINT_WIDTH);
-		for (int i = 0; i < n; i++)
-		{
-			double time = buf[i].time / BILLION;
-			int size = buf[i].size;
-			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, time / 1, time / size, (time / (size / 2)));
-		}
-		break;
-	case 1:
-		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/logn", "T/n", "T/1");
-		ui_line('-', PRINT_WIDTH);
-		for (int i = 0; i < n; i++)
-		{
-			double time = buf[i].time / BILLION;
-			int size = buf[i].size;
-			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (log(size))), time / size, (time / 1));
-		}
-		break;
-	case 2:
-		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/logn", "T/n", "T/(n/2)");
-		ui_line('-', PRINT_WIDTH);
-		for (int i = 0; i < n; i++)
-		{
-			double time = buf[i].time / BILLION;
-			int size = buf[i].size;
-			printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (log(size))), time / size, time / (size / 2));
-		}
-		break;
-
-	default:
-		break;
-	}
-	ui_line('=', PRINT_WIDTH);
-}
-
-/*
-
-void printAdam(result_t *buf, case_t c, int one, int two, int three)
-{
-	printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", viewNames[one], viewNames[two], viewNames[three]);
+	printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", viewName[x], viewName[y], viewName[z]);
 	ui_line('-', PRINT_WIDTH);
+
 	for (int i = 0; i < n; i++)
 	{
-		double time = buf[i].time / BILLION;
+		double time = buf[i].time;
 		int size = buf[i].size;
-		printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, (time / (size * log(size))), time / (size * size), time / (size * 2));
+		const double calc[] = {	time / (size * log(size)), 
+								time / log(size), 
+								time / (size * size),
+								time / (size * size * size), 
+								time / (size * 2), 
+								time / 1, 
+								time / size, 
+								time / (size / 2)};
+		printf("%-12d %12.8f %15.7e %15.7e %15.7e\n", size, time, calc[x], calc[y], calc[z]);
 	}
-
-	//Kvar från igår eftermiddags.
-		/*char arr[3][7];
-		arr[0][one];
-		char text1[7];
-		strcpy(text1, arr[0][one]);
-
-		printf("spacing", "Size", "time T(s)", text1, text2, text3);
-
-
-		printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", "T/nlogn = 1 ", "T/logn = 2", "T/n^2 = 3 ", "T/n^3 = 4 ", "T/2n = 5 ", "T/1 = 6", "T/n = 7 ", "T/(n/2) = 8 ");
-		
+	ui_line('=', PRINT_WIDTH);
 }
-
-
-*/

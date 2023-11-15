@@ -4,10 +4,6 @@
 //
 // Private
 //
-
-//
-//
-//
 void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 {
     int strl = ARRAY_SIZE;
@@ -17,67 +13,57 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
     for (int i = 0; i < n; i++)
     {
         struct timespec start_time, end_time;
+        int loop_numbers;
+
+        getArray(arr, c, strl);
+        v = get_v(arr, c, a, strl);
+        clock_gettime(CLOCK_MONOTONIC, &start_time);
 
         switch (a)
         {
         case 0: // Bubble
-            getArray(arr, c, strl);
-
-            clock_gettime(CLOCK_REALTIME, &start_time);
-            bubble_sort(arr, strl);
-            clock_gettime(CLOCK_REALTIME, &end_time);
+            loop_numbers = SORT_LOOP;
+            for (int j = 0; j < loop_numbers; j++)
+                bubble_sort(arr, strl);
             break;
 
         case 1: // Insertion
-            getArray(arr, c, strl);
-            clock_gettime(CLOCK_REALTIME, &start_time);
-            insertion_sort(arr, strl);
-            clock_gettime(CLOCK_REALTIME, &end_time);
+            loop_numbers = SORT_LOOP;
+            for (int j = 0; j < loop_numbers; j++)
+                insertion_sort(arr, strl);
             break;
 
         case 2: // Quick
-            getArray(arr, c, strl);
-            clock_gettime(CLOCK_REALTIME, &start_time);
-            quick_sort(arr, strl);
-            clock_gettime(CLOCK_REALTIME, &end_time);
+            loop_numbers = SORT_LOOP;
+            for (int j = 0; j < loop_numbers; j++)
+                quick_sort(arr, strl);
             break;
 
         case 3: // Linear
-            orderd_array(arr, strl);
-            v = get_v(arr, c, a, strl);
-            clock_gettime(CLOCK_REALTIME, &start_time);
-            for (int j = 0; j < SEARCH_LOOP; j++)
-            {
-            linear_search(arr, strl, v);
-            }
-            clock_gettime(CLOCK_REALTIME, &end_time);
+            loop_numbers = SEARCH_LOOP;
+            for (int j = 0; j < loop_numbers; j++)
+                linear_search(arr, strl, v);
             break;
 
         case 4: // Binary
-            getArray(arr, c, strl);
-            v = get_v(arr, c, a, strl);
-            clock_gettime(CLOCK_REALTIME, &start_time);
-            for (int j = 0; j < SEARCH_LOOP; j++)
-            {
+            loop_numbers = SEARCH_LOOP;
+            for (int j = 0; j < loop_numbers; j++)
                 binary_search(arr, strl, v);
-            }
-            clock_gettime(CLOCK_REALTIME, &end_time);
         default:
             break;
         }
+        clock_gettime(CLOCK_MONOTONIC, &end_time);
+        /*Calculate time*/
+        double time_dif = ((end_time.tv_sec * BILLION) + end_time.tv_nsec) - ((start_time.tv_sec * BILLION) + start_time.tv_nsec);
 
-        /*Lägger till värden i buf* för att skicka med till printfunktionen*/
+        /*Lägger till värden i buf* för att skicka med till print-funktionen*/
         buf[i].size = strl;
-        buf[i].time = end_time.tv_nsec - start_time.tv_nsec;
+        buf[i].time = (time_dif / loop_numbers) / BILLION;
 
-        if (buf[i].time < 0)
-        {
-            buf[i].time = (end_time.tv_nsec + BILLION) - start_time.tv_nsec;
-        }
         strl *= TIMES_TWO;
     }
 
-    /*Switch for printing right sort/search sequence*/
+    /*Switch for printing right sort/search sequence in ui.c*/
     print_results(buf, n, a, c);
 }
 
@@ -87,9 +73,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 void orderd_array(int *arr, int n)
 {
     for (int i = 0; i < n; i++)
-    {
         arr[i] = i;
-    }
 }
 
 void reverse_array(int *arr, int n)
@@ -107,9 +91,7 @@ void random_array(int *arr, int n)
     srand(time(NULL));
 
     for (int i = 0; i < n; i++)
-    {
         arr[i] = i;
-    }
 
     for (int i = n - 1; i > 0; i--)
     {
@@ -140,6 +122,7 @@ void getArray(int *arr, int c, int strl)
     }
 }
 
+/*Get right variable for the case*/
 int get_v(int *arr, case_t c, algorithm_t a, int n)
 {
     switch (c)
