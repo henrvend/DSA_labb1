@@ -5,7 +5,7 @@
 #define MAX_SIZE 16384
 #define ITERATIONS 4
 #define SEARCH_LOOP 10000
-#define SORT_LOOP 1
+#define SORT_LOOP 5
 #define TIMES_TWO 2
 
 #include <math.h>
@@ -47,4 +47,5 @@ void orderd_array(int *arr, int n);
 void reverse_array(int *arr, int n);
 void getArray(int *arr, int c, int strl);
 int get_v(int *arr, case_t c, algorithm_t a, int n);
+void zeroArray(int *arr, int n);
 #endif

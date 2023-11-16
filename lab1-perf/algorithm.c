@@ -82,19 +82,11 @@ void insertion_sort(int *a, int n)
 	}
 }
 
+
+/*Quick sort, calls for function quickSort that takes three parameters*/
 void quick_sort(int *a, int n)
 {
 	quickSort(a, 0, n - 1);
-
-	for (int i = 0; i < n; i++)
-	{
-		if (i % 20 == 0)
-		{
-			printf("\n");
-		}
-		printf("%d ", a[i]);
-	}
-	printf("\n");
 }
 
 bool linear_search(const int *a, int n, int v)
