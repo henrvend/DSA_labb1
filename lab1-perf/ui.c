@@ -190,47 +190,47 @@ void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 	switch (a)
 	{
 	case 0: // bubble
-		switch (c)
+		switch (bubble_sort_t)
 		{
-		case 0: printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_N_RAISED_2_t);		break;
-		case 1:	printLines(a, c, buf, n, T_DIV_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);	break;
-		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
+		case best_t: printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_N_RAISED_2_t);		break;
+		case worst_t:	printLines(a, c, buf, n, T_DIV_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);	break;
+		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
 		default: break;
 		}
 		break;
 	case 1: // insertion
-		switch (c)
+		switch (insertion_sort_t)
 		{
-		case 0:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
-		case 1:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_LOG_N_t);	break;
-		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
+		case best_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
+		case worst_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_LOG_N_t);	break;
+		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
 		default: break;
 		}
 		break;
 	case 2: // quick
-		switch (c)
+		switch (quick_sort_t)
 		{
-		case 0:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
-		case 1:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);break;
-		case 2:	printLines(a, c, buf, n, T_DIV_N_RAISED_2_t, T_DIV_N_LOG_N_t, T_DIV_TWO_N_t);	break;
+		case best_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
+		case worst_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);break;
+		case average_t:	printLines(a, c, buf, n, T_DIV_N_RAISED_2_t, T_DIV_N_LOG_N_t, T_DIV_TWO_N_t);	break;
 		default: break;
 		}
 		break;
 	case 3: // Linear
-		switch (c)
+		switch (linear_search_t)
 		{
-		case 0:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);		break;
-		case 1:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);		break;
-		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); 	break;
+		case best_t:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);		break;
+		case worst_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);		break;
+		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); 	break;
 		default: break;
 		}
 		break;
-	case 4: // Binary
+	case binary_search_t: // Binary
 		switch (c)
 		{
-		case 0:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);	break;
-		case 1:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);	break;
-		case 2:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); break;
+		case best_t:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);	break;
+		case worst_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);	break;
+		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); break;
 		default: break;
 		}
 		break;

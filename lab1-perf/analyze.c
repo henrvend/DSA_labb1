@@ -16,13 +16,13 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
         int loop_numbers;
         double time_dif = 0;
 
-        getArray(arr, c, strl);
+        // getArray(arr, c, strl);
         v = get_v(arr, c, a, strl);
-        clock_gettime(CLOCK_MONOTONIC, &start_time);
+        //clock_gettime(CLOCK_MONOTONIC, &start_time);
 
         switch (a)
         {
-        case 0: // Bubble
+        case bubble_sort_t: // Bubble
             loop_numbers = SORT_LOOP;
             for (int j = 0; j < loop_numbers; j++)
             {
@@ -34,7 +34,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             }
             break;
 
-        case 1: // Insertion
+        case insertion_sort_t: // Insertion
             loop_numbers = SORT_LOOP;
             for (int j = 0; j < loop_numbers; j++)
             {
@@ -47,7 +47,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 
             break;
 
-        case 2: // Quick
+        case quick_sort_t: // Quick
             loop_numbers = SORT_LOOP;
             for (int j = 0; j < loop_numbers; j++)
             {
@@ -67,7 +67,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             }
             break;
 
-        case 3: // Linear
+        case linear_search_t: // Linear
             loop_numbers = SEARCH_LOOP;
             for (int j = 0; j < loop_numbers; j++)
             {
@@ -79,7 +79,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 
             break;
 
-        case 4: // Binary
+        case binary_search_t: // Binary
             loop_numbers = SEARCH_LOOP;
             for (int j = 0; j < loop_numbers; j++)
             {
@@ -148,13 +148,13 @@ void getArray(int *arr, int c, int strl)
 {
     switch (c)
     {
-    case 0: // best
+    case best_t: // best
         orderd_array(arr, strl);
         break;
-    case 1: // worst
+    case worst_t: // worst
         reverse_array(arr, strl);
         break;
-    case 2: // average
+    case average_t: // average
         random_array(arr, strl);
         break;
     default:
@@ -167,13 +167,13 @@ int get_v(int *arr, case_t c, algorithm_t a, int n)
 {
     switch (c)
     {
-    case 0: // Best
+    case best_t: // Best
         return (a == 3) ? arr[0] : arr[n / 2];
         break;
-    case 1: // Worst
+    case worst_t: // Worst
         return (a == 3) ? 1 : arr[0];
         break;
-    case 2: // Avarage
+    case average_t: // Avarage
         return (a == 3) ? arr[n / 2] : arr[0];
         break;
     default:
