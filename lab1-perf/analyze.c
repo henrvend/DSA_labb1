@@ -16,9 +16,8 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
         int loop_numbers;
         double time_dif = 0;
 
-        // getArray(arr, c, strl);
+        getArray(arr, c, strl);
         v = get_v(arr, c, a, strl);
-        //clock_gettime(CLOCK_MONOTONIC, &start_time);
 
         switch (a)
         {
@@ -32,7 +31,7 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
                 clock_gettime(CLOCK_MONOTONIC, &end_time);
                 time_dif += ((end_time.tv_sec * BILLION) + end_time.tv_nsec) - ((start_time.tv_sec * BILLION) + start_time.tv_nsec);
             }
-            break;
+            break; 
 
         case insertion_sort_t: // Insertion
             loop_numbers = SORT_LOOP;
@@ -52,13 +51,9 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             for (int j = 0; j < loop_numbers; j++)
             {
                 if (c == 1)
-                {
                     zeroArray(arr, strl);
-                }
                 else
-                {
                     getArray(arr, c, strl);
-                }
 
                 clock_gettime(CLOCK_MONOTONIC, &start_time);
                 quick_sort(arr, strl);
@@ -94,11 +89,12 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
         /*Lägger till värden i buf* för att skicka med till print-funktionen*/
         buf[i].size = strl;
         buf[i].time = (time_dif / loop_numbers) / BILLION;
+       
         /*for (int q = 0; q < strl; q++)
         {
             printf("%d ", arr[q]);
-        }*/
-        printf("\n");
+        }
+        printf("\n");*/
         strl *= TIMES_TWO;
     }
 
@@ -168,13 +164,13 @@ int get_v(int *arr, case_t c, algorithm_t a, int n)
     switch (c)
     {
     case best_t: // Best
-        return (a == 3) ? arr[0] : arr[n / 2];
+        return (a == linear_search_t) ? arr[0] : arr[n / 2];
         break;
     case worst_t: // Worst
-        return (a == 3) ? 1 : arr[0];
+        return -1;
         break;
     case average_t: // Avarage
-        return (a == 3) ? arr[n / 2] : arr[0];
+        return (a == linear_search_t) ? arr[n / 2] : arr[0];
         break;
     default:
         break;

@@ -72,11 +72,11 @@ static char *getCaseTypeString(case_t c)
 {
 	switch (c)
 	{
-	case 0:
+	case best_t:
 		return "Best";
-	case 1:
+	case worst_t:
 		return "Worst";
-	case 2:
+	case average_t:
 		return "Average";
 	default:
 		return NULL;
@@ -87,21 +87,20 @@ static char *getAlgorithmString(algorithm_t a)
 {
 	switch (a)
 	{
-	case 0:
+	case bubble_sort_t:
 		return "Bubble sort";
-	case 1:
+	case insertion_sort_t:
 		return "Insertion sort";
-	case 2:
+	case quick_sort_t:
 		return "Quick sort";
-	case 3:
+	case linear_search_t:
 		return "Linear search";
-	case 4:
+	case binary_search_t:
 		return "Binary search";
 	default:
 		return NULL;
 	}
 }
-
 
 //
 // Public
@@ -187,28 +186,29 @@ void ui_run()
 }
 void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 {
+	printf("%d \n",c);
 	switch (a)
 	{
-	case 0: // bubble
-		switch (bubble_sort_t)
+	case bubble_sort_t: // bubble
+		switch (c)
 		{
-		case best_t: printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_N_RAISED_2_t);		break;
+		case best_t: 	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_N_RAISED_2_t);		break;
 		case worst_t:	printLines(a, c, buf, n, T_DIV_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);	break;
 		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
 		default: break;
 		}
 		break;
-	case 1: // insertion
-		switch (insertion_sort_t)
+	case insertion_sort_t: // insertion
+		switch (c)
 		{
-		case best_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
+		case best_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_N_RAISED_2_t);		break;
 		case worst_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_LOG_N_t);	break;
 		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_TWO_N_t);		break;
 		default: break;
 		}
 		break;
-	case 2: // quick
-		switch (quick_sort_t)
+	case quick_sort_t: // quick
+		switch (c)
 		{
 		case best_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_t, T_DIV_LOG_N_t);			break;
 		case worst_t:	printLines(a, c, buf, n, T_DIV_N_LOG_N_t, T_DIV_N_RAISED_2_t, T_DIV_N_RAISED_3_t);break;
@@ -216,8 +216,8 @@ void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 		default: break;
 		}
 		break;
-	case 3: // Linear
-		switch (linear_search_t)
+	case linear_search_t: // Linear
+		switch (c)
 		{
 		case best_t:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);		break;
 		case worst_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);		break;
@@ -246,7 +246,7 @@ void printLines(algorithm_t a, case_t c, result_t *buf, int n, int x, int y, int
 	printf("%40s: %s\n", getAlgorithmString(a), getCaseTypeString(c));
 	ui_line('=', PRINT_WIDTH);
 
-	const char *viewName[] = {"T/nlogn", "T/logn", "T/n^2", "T/n^3", "T/2n", "T/1", "T/n", "T/(n/2)"};
+	char *viewName[] = {"T/nlogn", "T/logn", "T/n^2", "T/n^3", "T/2n", "T/1", "T/n", "T/(n/2)"};
 
 	printf("\n%-12s %12s %15s %15s %15s\n", "Size", "time T(s)", viewName[x], viewName[y], viewName[z]);
 	ui_line('-', PRINT_WIDTH);
