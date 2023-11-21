@@ -4,7 +4,7 @@
 // Private
 //
 
-/*Quicksort starts here*/
+//Quicksort starts here
 void quickSort(int *a, int low, int high)
 {
 	if (low < high)
@@ -18,6 +18,8 @@ void quickSort(int *a, int low, int high)
 int partition(int a[], int low, int high)
 {
 	int index = low;
+
+	//We kept the pivot value to mid and changed the values for the array instead to create the worst scenario.
 	int mid = (low + high) / 2;
 	int pivot = a[mid];
 	int i;
@@ -47,6 +49,7 @@ void swap(int *x, int *y)
 //
 // Public
 //
+//Bubble sort starts here.
 void bubble_sort(int *a, int n)
 {
 	bool swapped = true;
@@ -65,7 +68,7 @@ void bubble_sort(int *a, int n)
 		}
 	}
 }
-
+//Insertion_sort sort starts here.
 void insertion_sort(int *a, int n)
 {
 	for (int i = 0; i < n; i++)
@@ -83,12 +86,13 @@ void insertion_sort(int *a, int n)
 }
 
 
-/*Quick sort, calls for function quickSort that takes three parameters*/
+/*Quick sort, calls on a new function called quickSort that was made to be able to handle three parameters*/
 void quick_sort(int *a, int n)
 {
 	quickSort(a, 0, n - 1);
 }
 
+//Linear search starts here.
 bool linear_search(const int *a, int n, int v)
 {
 	for (int i = 0; i < n; i++)
@@ -98,7 +102,7 @@ bool linear_search(const int *a, int n, int v)
 	}
 	return false;
 }
-
+//Binary search starts here.
 bool binary_search(const int *a, int n, int v)
 {
 	int left = 0, right = (n - 1);
