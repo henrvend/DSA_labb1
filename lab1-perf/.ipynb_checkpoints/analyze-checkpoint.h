@@ -2,8 +2,11 @@
 #define ANALYZE_H
 #define ARRAY_SIZE 512
 
-#define SIZE_START 512
+#define MAX_SIZE 16384
 #define ITERATIONS 4
+#define SEARCH_LOOP 10000
+#define SORT_LOOP 3
+#define TIMES_TWO 2
 
 #include <math.h>
 #include <stdio.h>
@@ -12,7 +15,8 @@
 #include <string.h>
 
 // algorithm_t defines different algorithms
-typedef enum {
+typedef enum
+{
 	bubble_sort_t,
 	insertion_sort_t,
 	quick_sort_t,
@@ -21,14 +25,16 @@ typedef enum {
 } algorithm_t;
 
 // case_t defines different cases
-typedef enum {
+typedef enum
+{
 	best_t,
 	worst_t,
 	average_t,
 } case_t;
 
 // result_t defines a timed measurement for a given array size
-typedef struct {
+typedef struct
+{
 	int size;
 	double time;
 } result_t;
@@ -40,4 +46,6 @@ void random_array(int *arr, int n);
 void orderd_array(int *arr, int n);
 void reverse_array(int *arr, int n);
 void getArray(int *arr, int c, int strl);
+int get_v(int *arr, case_t c, algorithm_t a, int n);
+void zeroArray(int *arr, int n);
 #endif
