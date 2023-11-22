@@ -12,5 +12,5 @@ test: $(OBJ_TEST)
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 clean:
-	rm -rf *.o main test
+	rm -rf *.o main
 

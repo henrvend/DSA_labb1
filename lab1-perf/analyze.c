@@ -50,7 +50,8 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
             loop_numbers = SORT_LOOP;
             for (int j = 0; j < loop_numbers; j++)
             {
-                if (c == 1)
+                //If worst case, fill array with zeroes tor sort    
+                if (c == worst_t)
                     zeroArray(arr, strl);
                 else
                     getArray(arr, c, strl);
