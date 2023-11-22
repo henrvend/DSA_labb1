@@ -221,7 +221,7 @@ void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 		{
 		case best_t:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);		break;
 		case worst_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);		break;
-		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); 	break;
+		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t); 	break;
 		default: break;
 		}
 		break;
@@ -229,7 +229,7 @@ void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 		switch (c)
 		{
 		case best_t:	printLines(a, c, buf, n, T_DIV_ONE_t, T_DIV_N_t, T_DIV_N_DIV_2_t);	break;
-		case worst_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_ONE_t);	break;
+		case worst_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_LOG_N_t);	break;
 		case average_t:	printLines(a, c, buf, n, T_DIV_LOG_N_t, T_DIV_N_t, T_DIV_N_DIV_2_t); break;
 		default: break;
 		}

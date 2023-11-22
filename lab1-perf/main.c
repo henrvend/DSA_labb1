@@ -1,3 +1,7 @@
+//Henrik Vendel
+//Adam Brattström
+
+
 #include "ui.h"
 
 int main()
