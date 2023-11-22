@@ -184,6 +184,7 @@ void ui_run()
 	}
 	ui_exit();
 }
+//Function that controls which algorithm, case, and time complexity will be sent to the printLines function.
 void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 {
 	switch (a)
@@ -238,7 +239,7 @@ void print_results(result_t *buf, int n, algorithm_t a, case_t c)
 	}
 }
 
-
+//Function that does calculations and prints everything to the terminal.
 void printLines(algorithm_t a, case_t c, result_t *buf, int n, int x, int y, int z)
 {
 	ui_line('*', PRINT_WIDTH);

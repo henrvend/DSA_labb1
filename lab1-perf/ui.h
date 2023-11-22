@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <math.h>
 
+//Enum for all the different time complexitys.
 typedef enum
 {
 	T_DIV_N_LOG_N_t,

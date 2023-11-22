@@ -86,15 +86,10 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
         default:
             break;
         }
-        /*Lägger till värden i buf* för att skicka med till print-funktionen*/
+        //Adds values to buf then sends them to the print-function.
         buf[i].size = strl;
         buf[i].time = (time_dif / loop_numbers) / BILLION;
        
-        /*for (int q = 0; q < strl; q++)
-        {
-            printf("%d ", arr[q]);
-        }
-        printf("\n");*/
         strl *= TIMES_TWO;
     }
 
@@ -106,12 +101,14 @@ void benchmark(const algorithm_t a, const case_t c, result_t *buf, int n)
 /*--------------Array handling-----------------*/
 /*---------------------------------------------*/
 
+//Fills arrat with values in normal order, from 0 to n.
 void orderd_array(int *arr, int n)
 {
     for (int i = 0; i < n; i++)
         arr[i] = i;
 }
 
+//Fills array with values in reverse order.
 void reverse_array(int *arr, int n)
 {
     int j = 0;
@@ -122,6 +119,7 @@ void reverse_array(int *arr, int n)
     }
 }
 
+//Fills array with values then randomizes them.
 void random_array(int *arr, int n)
 {
     srand(time(NULL));
@@ -177,7 +175,7 @@ int get_v(int *arr, case_t c, algorithm_t a, int n)
     }
     return 0;
 }
-
+//Fills an array with as many zeros as the input n.
 void zeroArray(int *arr, int n)
 {
     for (int i = 0; i < n; i++)
