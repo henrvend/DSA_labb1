@@ -7,7 +7,6 @@
 #define BILLION 1000000000L
 #define ARRAY_NAME 25
 #define CASE_NAME 25
-#define spacing "\n%-12s %12s %15s %15s %15s\n"
 
 #include "analyze.h"
 
